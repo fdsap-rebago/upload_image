@@ -1,0 +1,142 @@
+basePath: /
+definitions:
+  main.ImageID:
+    properties:
+      img_id:
+        example: 1
+        type: integer
+    type: object
+  main.ImageSrc:
+    properties:
+      img_src:
+        type: string
+    type: object
+  main.Uploaded_Images:
+    properties:
+      img_data:
+        items:
+          type: integer
+        type: array
+      img_id:
+        type: integer
+      img_type:
+        type: string
+    type: object
+  main.UserManagement:
+    properties:
+      branch_names:
+        type: string
+      check_status:
+        type: string
+      given_name:
+        type: string
+      last_name:
+        type: string
+      middle_name:
+        type: string
+      roles:
+        type: string
+      user_name:
+        description: |-
+          RoleID   int    `json:"role_id"`
+          RoleName string `json:"role_name"`
+          RoleDesc string `json:"role_desc"`
+        type: string
+    type: object
+host: 192.168.0.138:4040
+info:
+  contact:
+    name: FDSAP Support
+  description: Image Upload Swagger
+  license: {}
+  termsOfService: http://swagger.io/terms/
+  title: Image Upload
+  version: "1.0"
+paths:
+  /fetch:
+    post:
+      consumes:
+      - application/json
+      description: FETCH IMAGE DATA
+      parameters:
+      - description: Image ID
+        in: body
+        name: img_id
+        required: true
+        schema:
+          $ref: '#/definitions/main.ImageID'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Uploaded_Images'
+      summary: FETCH IMAGE DATA
+      tags:
+      - KPLUS
+  /fetch_image_data/{img_id}:
+    get:
+      consumes:
+      - application/json
+      description: FETCH IMAGE DATA
+      parameters:
+      - description: Image ID
+        in: path
+        name: img_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.ImageSrc'
+      summary: FETCH IMAGE DATA
+      tags:
+      - KPLUS
+  /get_um/{userInput}:
+    get:
+      consumes:
+      - application/json
+      description: Fetch User Data
+      parameters:
+      - description: User Input
+        in: path
+        name: userInput
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.UserManagement'
+      summary: Fetch User Data
+      tags:
+      - KPLUS
+  /upload:
+    post:
+      consumes:
+      - application/json
+      description: UPLOAD IMAGE
+      parameters:
+      - description: Complete image path
+        in: body
+        name: img_src
+        required: true
+        schema:
+          $ref: '#/definitions/main.ImageSrc'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Uploaded_Images'
+      summary: UPLOAD IMAGE
+      tags:
+      - KPLUS
+swagger: "2.0"
